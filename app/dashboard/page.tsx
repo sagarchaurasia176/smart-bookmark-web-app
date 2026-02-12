@@ -45,7 +45,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen p-8 flex items-center justify-center">
-      <DashboardLayout/>
+      {/* <DashboardLayout/> */}
     </div>
   )
 }
