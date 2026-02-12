@@ -1,0 +1,6 @@
+[auth.external.google]
+enabled = true
+client_id = "819322927987-nqlskpv19fbge3rcevohq306a1jreitp.apps.googleusercontent.com"
+secret = "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"
+skip_nonce_check = false
+
