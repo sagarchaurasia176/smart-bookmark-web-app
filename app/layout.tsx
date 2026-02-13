@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "Smart Bookmark",
   description:
     "Smart Bookmark - Organize, manage, and access your bookmarks intelligently with advanced search and categorization features.",
+  icons: {
+    icon: "/logos.png",
+  },
 };
 
 export default function RootLayout({
@@ -29,11 +32,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <head>
-          <link rel="icon" href="./logos.png" /> 
-        </head>
         {children}
-        <Toaster/>
+        <Toaster />
       </body>
     </html>
   );
