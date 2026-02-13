@@ -3,7 +3,8 @@ import { X, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 type Props = {
   open: boolean;
@@ -12,13 +13,17 @@ type Props = {
 };
 
 const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
-  if (!open) return null;
-
+  const [mounted, setMounted] = useState(false);
   const [bookmarkData, setBookmarkData] = useState({
     title: "",
     url: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   //stored the data into the db
   const submitBookmark = async (e: any) => {
@@ -61,14 +66,18 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
     });
   };
 
-  return (
+  if (!open || !mounted) return null;
+
+  const modalContent = (
     <div
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 bg-black/10 backdrop-blur-lg flex items-end sm:items-center justify-center p-4 animate-in fade-in duration-200"
       onClick={() => setOpen(false)}
+      style={{ zIndex: 99999 }}
     >
       <div
-        className="bg-white rounded-xl mt-[22rem] shadow-2xl w-full max-w-md mx-auto border border-slate-200 animate-in zoom-in slide-in-from-bottom-4 duration-300"
+        className="bg-white rounded-xl shadow-2xl w-full max-w-md border border-slate-200 animate-in zoom-in slide-in-from-bottom-4 duration-300 mb-0 sm:mb-0"
         onClick={(e) => e.stopPropagation()}
+        style={{ zIndex: 100000 }}
       >
         {/* Header */}
         <div className="flex items-center  justify-between p-6 border-b border-slate-200">
@@ -76,7 +85,9 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
               <Bookmark className="w-5 h-5 text-white" />
             </div>
-            <h2 className="text-xl font-semibold text-slate-900">Add Bookmark</h2>
+            <h2 className="text-xl font-semibold text-slate-900">
+              Add Bookmark
+            </h2>
           </div>
           <button
             onClick={() => setOpen(false)}
@@ -152,6 +163,8 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default BookmarkModal;
