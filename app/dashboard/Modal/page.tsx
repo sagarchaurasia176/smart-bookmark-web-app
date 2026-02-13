@@ -1,9 +1,8 @@
 import { X, Link, Type, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/lib/supabase";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 
 type Props = {
   open: boolean;
@@ -13,6 +12,7 @@ type Props = {
 
 export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
   if (!open) return null;
+
   const [bookmarkData, setBookmarkData] = useState({
     title: "",
     url: "",
@@ -25,20 +25,12 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
     setIsSubmitting(true);
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        alert("User not authenticated");
-        return;
-      }
-
+      // No need to get user here - server will handle authentication
       const bookmarkInputs = await axios.post("/api/bookmark", {
         title: bookmarkData.title,
         url: bookmarkData.url,
-        userId: user.id,
       });
+      
       if (bookmarkInputs?.data) {
         setBookmarkData({ title: "", url: "" });
         setOpen(false);
@@ -66,23 +58,17 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
 
   return (
     <div
-      className="fixed inset-0 backdrop-blur-sm z-[100] p-4"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      className="fixed inset-0 bg-black/60 min-h-screen backdrop-blur-md z-50 flex items-center justify-center p-4"
       onClick={() => setOpen(false)}
     >
       <div
-        className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-md border relative"
-        style={{ margin: "auto" }}
-        onClick={(e) => e.stopPropagation()} // help to not refersh the page
+        className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700 animate-in fade-in zoom-in duration-200"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-primary/10 rounded-lg">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-primary/10 rounded-xl">
               <Link className="h-5 w-5 text-primary" />
             </div>
             <h2 className="text-xl font-semibold">Add Bookmark</h2>
@@ -91,20 +77,20 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
             variant="ghost"
             size="icon"
             onClick={() => setOpen(false)}
-            className="h-8 w-8 rounded-full"
+            className="h-9 w-9 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </Button>
         </div>
 
         {/* Content */}
         <form onSubmit={submitBookmark}>
-          <div className="p-6 space-y-4">
+          <div className="p-6 space-y-5">
             {/* Title Input */}
             <div className="space-y-2">
               <label
                 htmlFor="title"
-                className="flex items-center gap-2 text-sm font-medium"
+                className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 <Type className="h-4 w-4 text-muted-foreground" />
                 Title
@@ -115,7 +101,7 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
                 value={bookmarkData.title}
                 onChange={formIputOnchangeHandler}
                 placeholder="Enter bookmark title..."
-                className="h-10"
+                className="h-11"
                 required
               />
             </div>
@@ -124,7 +110,7 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
             <div className="space-y-2">
               <label
                 htmlFor="url"
-                className="flex items-center gap-2 text-sm font-medium"
+                className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 <Link className="h-4 w-4 text-muted-foreground" />
                 URL
@@ -136,18 +122,19 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
                 value={bookmarkData.url}
                 onChange={formIputOnchangeHandler}
                 placeholder="https://example.com"
-                className="h-10"
+                className="h-11"
                 required
               />
             </div>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50 dark:bg-gray-800/50">
+          <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-2xl">
             <Button
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
+              disabled={isSubmitting}
             >
               Cancel
             </Button>
@@ -161,5 +148,3 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
     </div>
   );
 };
-
-

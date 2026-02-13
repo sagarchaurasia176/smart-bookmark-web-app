@@ -2,6 +2,9 @@
   "name": "smart-bookmark-web-app",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -25,6 +28,7 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-hot-toast": "^2.6.0",
     "supabase": "^2.76.8",
     "tailwind-merge": "^3.4.0"
   },

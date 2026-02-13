@@ -101,11 +101,11 @@ export const HeaderHorizontalBar = () => {
       {/* render-the-bookmark-component  */}
       {isOpenBookmark && (
         <>
-          <BookmarkModal open={isOpenBookmark} setOpen={setBookMarkModal} />
+          <BookmarkModal open={isOpenBookmark} setOpen={setBookMarkModal}/>
         </>
       )}
       {/* cards components */}
-      
+
 
     </div>
   );

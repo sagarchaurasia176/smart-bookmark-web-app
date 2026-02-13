@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { User } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
 import DashboardLayout from './layout'
+import BookMarkCards from './BookmarkCards/page'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -45,7 +46,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen p-8 flex items-center justify-center">
-      {/* <DashboardLayout/> */}
+        <BookMarkCards/>
     </div>
   )
 }
