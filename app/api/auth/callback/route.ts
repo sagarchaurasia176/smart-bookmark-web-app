@@ -18,7 +18,14 @@ export async function GET(request: Request) {
             return cookieStore.get(name)?.value;
           },
           set(name: string, value: string, options: any) {
-            cookieStore.set({ name, value, ...options });
+            cookieStore.set({
+              name,
+              value,
+              ...options,
+              maxAge: 60 * 60 * 24 * 365, // 1 year in seconds
+              sameSite: "lax",
+              secure: process.env.NODE_ENV === "production",
+            });
           },
           remove(name: string, options: any) {
             cookieStore.set({ name, value: "", ...options });

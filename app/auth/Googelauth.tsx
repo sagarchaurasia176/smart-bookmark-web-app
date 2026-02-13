@@ -58,6 +58,7 @@ export default function Page() {
           >
             Sign in with Google
           </button>
+          
         </div>
       ) : (
         <div className="text-center space-y-4">

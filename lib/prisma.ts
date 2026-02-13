@@ -1,6 +1,8 @@
 import { PrismaPg } from '@prisma/adapter-pg'
+//For prduction
+// import { PrismaClient } from './generated/prisma/client'
+//for dev
 import { PrismaClient } from './generated/prisma/client'
-
 
 //Connection string for the postrgres sql with the prisma
 const connectionString = `${process.env.DATABASE_URL}`

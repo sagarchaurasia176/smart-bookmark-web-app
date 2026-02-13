@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import axios from "axios";
-import HorizontalBar from "../dashboard/SearchBar/page";
+import { useRouter } from "next/router";
 
 interface User {
   name: string;
@@ -11,7 +11,8 @@ interface User {
 
 const DashboardSidebar = () => {
   const [user, setUser] = useState<User | null>(null);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   useEffect(() => {
     const getUserName = async () => {
       try {
@@ -24,6 +25,11 @@ const DashboardSidebar = () => {
 
     getUserName();
   }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setIsLoggedIn(false);
+  };
 
   return (
     <div className="flex bg-slate-900 h-screen">
@@ -83,7 +89,10 @@ const DashboardSidebar = () => {
 
         {/* Footer */}
         <div className="p-4 border-t border-gray-200">
-          <button className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-150">
+          <button
+            onClick={handleSignOut}
+            className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors duration-150"
+          >
             <svg
               className="w-5 h-5 mr-3 text-gray-400"
               fill="none"
