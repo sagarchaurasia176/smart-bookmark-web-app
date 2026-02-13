@@ -11,9 +11,11 @@ import {
 import { Plus, Filter, SortAsc, Upload, LayoutGrid, List } from "lucide-react";
 import { useState } from "react";
 import { BookmarkModal } from "../Modal/page";
+import { useRefreshBookmarks } from "../layout";
 
 export const HeaderHorizontalBar = () => {
   const [isOpenBookmark, setBookMarkModal] = useState(false);
+  const refreshBookmarks = useRefreshBookmarks();
   return (
     <div className="flex gap-2 items-center flex-shrink-0">
       {/* View Toggle */}
@@ -101,7 +103,13 @@ export const HeaderHorizontalBar = () => {
       {/* render-the-bookmark-component  */}
       {isOpenBookmark && (
         <>
-          <BookmarkModal open={isOpenBookmark} setOpen={setBookMarkModal}/>
+          <BookmarkModal 
+            open={isOpenBookmark} 
+            setOpen={setBookMarkModal}
+            onBookmarkAdded={() => {
+              refreshBookmarks?.();
+            }}
+          />
         </>
       )}
       {/* cards components */}

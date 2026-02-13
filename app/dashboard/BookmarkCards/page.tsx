@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Bookmark, ExternalLink, Trash2, Calendar } from "lucide-react";
 
@@ -19,7 +19,28 @@ const BookMarkCards = () => {
 
   useEffect(() => {
     fetchBookmarks();
-  }, [bookmarks]);
+
+    // Listen for storage events from other tabs
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "bookmarks-updated") {
+        fetchBookmarks();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // Also listen for custom events in the same tab
+    const handleCustomEvent = () => {
+      fetchBookmarks();
+    };
+
+    window.addEventListener("bookmarks-changed", handleCustomEvent);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("bookmarks-changed", handleCustomEvent);
+    };
+  }, []);
 
   const fetchBookmarks = async () => {
     try {
@@ -44,6 +65,10 @@ const BookMarkCards = () => {
       await axios.delete(`/api/bookmark/${id}`);
       setBookmarks(bookmarks.filter((b) => b.id !== id));
       toast.success("Bookmark deleted!");
+
+      // Notify other tabs
+      localStorage.setItem("bookmarks-updated", Date.now().toString());
+      window.dispatchEvent(new Event("bookmarks-changed"));
     } catch (error) {
       console.error("Error deleting bookmark:", error);
       toast.error("Failed to delete bookmark");
@@ -84,7 +109,8 @@ const BookMarkCards = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-1">Bookmarks</h1>
           <p className="text-gray-600">
-            {bookmarks.length} {bookmarks.length === 1 ? "bookmark" : "bookmarks"}
+            {bookmarks.length}{" "}
+            {bookmarks.length === 1 ? "bookmark" : "bookmarks"}
           </p>
         </div>
 
@@ -96,9 +122,7 @@ const BookMarkCards = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 No bookmarks yet
               </h3>
-              <p className="text-gray-600">
-                Start saving your favorite links.
-              </p>
+              <p className="text-gray-600">Start saving your favorite links.</p>
             </div>
           </div>
         ) : (

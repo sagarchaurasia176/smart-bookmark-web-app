@@ -35,6 +35,10 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
         setBookmarkData({ title: "", url: "" });
         setOpen(false);
         onBookmarkAdded?.();
+        
+        // Notify all tabs (including this one)
+        localStorage.setItem("bookmarks-updated", Date.now().toString());
+        window.dispatchEvent(new Event("bookmarks-changed"));
       }
     } catch (error) {
       console.error("Error saving bookmark:", error);
