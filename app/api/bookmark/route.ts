@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-<<<<<<< Updated upstream
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -25,7 +24,6 @@ export async function getAuthenticatedUser() {
       },
     },
   );
-
   const {
     data: { user },
     error,
@@ -37,10 +35,6 @@ export async function getAuthenticatedUser() {
 
   return user;
 }
-=======
-import { NextResponse } from "next/server";
-import { getAuthenticatedUser } from "../authenticatedUsers/route";
->>>>>>> Stashed changes
 
 // post req - for creating the bookmark and update into the db
 export async function POST(request: Request) {
