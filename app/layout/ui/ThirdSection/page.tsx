@@ -20,12 +20,17 @@ export default function ThirdSection() {
             </div>
           </div>
 
-          {/* Right side - YouTube video */}
+          {/* Right side - YouTube video showcase the projec*/}
           <div className="aspect-video w-full">
-           <iframe width="560" height="315" src="https://www.youtube.com/embed/8Q1S3jmiIl8?si=D2X1mXQxsVP2OL3m" 
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/8Q1S3jmiIl8?si=D2X1mXQxsVP2OL3m"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </div>
