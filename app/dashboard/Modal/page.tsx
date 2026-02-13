@@ -1,3 +1,4 @@
+"use client"
 import { X, Link, Type, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +11,7 @@ type Props = {
   onBookmarkAdded?: () => void;
 };
 
-export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
+const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
   if (!open) return null;
 
   const [bookmarkData, setBookmarkData] = useState({
@@ -152,3 +153,5 @@ export const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
     </div>
   );
 };
+
+export default BookmarkModal;

@@ -1,7 +1,8 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { HeaderHorizontalBar } from "../LeftHorizontalBar/page";
+import HeaderHorizontalBar from "../LeftHorizontalBar/page";
+// import { HeaderHorizontalBar } from "../LeftHorizontalBar/page";
 
 
 const HorizontalBar = () => {

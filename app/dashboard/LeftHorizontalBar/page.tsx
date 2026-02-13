@@ -10,10 +10,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Plus, Filter, SortAsc, Upload, LayoutGrid, List } from "lucide-react";
 import { useState } from "react";
-import { BookmarkModal } from "../Modal/page";
+// import { BookmarkModal} from "../Modal/page";
 import { useRefreshBookmarks } from "../layout";
+import BookmarkModal from "../Modal/page";
 
-export const HeaderHorizontalBar = () => {
+
+const HeaderHorizontalBar = () => {
   const [isOpenBookmark, setBookMarkModal] = useState(false);
   const refreshBookmarks = useRefreshBookmarks();
   return (
@@ -118,3 +120,6 @@ export const HeaderHorizontalBar = () => {
     </div>
   );
 };
+
+
+export default HeaderHorizontalBar;
