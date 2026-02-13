@@ -29,6 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <head>
+          <link rel="icon" href="./logos.png" /> 
+        </head>
         {children}
         <Toaster/>
       </body>
