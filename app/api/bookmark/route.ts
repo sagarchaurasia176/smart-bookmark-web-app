@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
-// Helper function to get authenticated user
-async function getAuthenticatedUser() {
+
+//auth-users
+export async function getAuthenticatedUser() {
   const cookieStore = await cookies();
 
   const supabase = createServerClient(
