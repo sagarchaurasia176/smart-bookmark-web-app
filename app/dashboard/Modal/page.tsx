@@ -1,5 +1,5 @@
-"use client"
-import { X, Link, Type, Save } from "lucide-react";
+"use client";
+import { X, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -31,12 +31,12 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
         title: bookmarkData.title,
         url: bookmarkData.url,
       });
-      
+
       if (bookmarkInputs?.data) {
         setBookmarkData({ title: "", url: "" });
         setOpen(false);
         onBookmarkAdded?.();
-        
+
         // Notify all tabs (including this one)
         localStorage.setItem("bookmarks-updated", Date.now().toString());
         window.dispatchEvent(new Event("bookmarks-changed"));
@@ -63,41 +63,38 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 min-h-screen backdrop-blur-md z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 animate-in fade-in duration-200"
       onClick={() => setOpen(false)}
     >
       <div
-        className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700 animate-in fade-in zoom-in duration-200"
+        className="bg-white rounded-xl mt-[22rem] shadow-2xl w-full max-w-md mx-auto border border-slate-200 animate-in zoom-in slide-in-from-bottom-4 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center  justify-between p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-primary/10 rounded-xl">
-              <Link className="h-5 w-5 text-primary" />
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <Bookmark className="w-5 h-5 text-white" />
             </div>
-            <h2 className="text-xl font-semibold">Add Bookmark</h2>
+            <h2 className="text-xl font-semibold text-slate-900">Add Bookmark</h2>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
             onClick={() => setOpen(false)}
-            className="h-9 w-9 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 transition-colors text-slate-500 hover:text-slate-700"
           >
-            <X className="h-5 w-5" />
-          </Button>
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        {/* Content */}
+        {/* Form */}
         <form onSubmit={submitBookmark}>
-          <div className="p-6 space-y-5">
+          <div className="p-6 space-y-4">
             {/* Title Input */}
             <div className="space-y-2">
               <label
                 htmlFor="title"
-                className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="text-sm font-medium text-slate-700"
               >
-                <Type className="h-4 w-4 text-muted-foreground" />
                 Title
               </label>
               <Input
@@ -105,7 +102,7 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
                 name="title"
                 value={bookmarkData.title}
                 onChange={formIputOnchangeHandler}
-                placeholder="Enter bookmark title..."
+                placeholder="Enter bookmark title"
                 className="h-11"
                 required
               />
@@ -115,9 +112,8 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
             <div className="space-y-2">
               <label
                 htmlFor="url"
-                className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="text-sm font-medium text-slate-700"
               >
-                <Link className="h-4 w-4 text-muted-foreground" />
                 URL
               </label>
               <Input
@@ -134,18 +130,22 @@ const BookmarkModal = ({ open, setOpen, onBookmarkAdded }: Props) => {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-2xl">
+          <div className="flex items-center justify-end gap-3 p-6 border-t border-slate-200 bg-slate-50 rounded-b-xl">
             <Button
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
               disabled={isSubmitting}
+              className="px-6"
             >
               Cancel
             </Button>
-            <Button type="submit" className="gap-2" disabled={isSubmitting}>
-              <Save className="h-4 w-4" />
-              {isSubmitting ? "Saving..." : "Save Bookmark"}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-6 bg-blue-600 hover:bg-blue-700"
+            >
+              {isSubmitting ? "Saving..." : "Save"}
             </Button>
           </div>
         </form>
