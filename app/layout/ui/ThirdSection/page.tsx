@@ -24,7 +24,7 @@ export default function ThirdSection() {
           <div className="aspect-video w-full">
             <iframe
               className="w-full h-full rounded-lg shadow-lg"
-              src="https://www.youtube.com/embed/JiwTGGGIhDs"
+              src="https://youtu.be/8Q1S3jmiIl8?si=oD4zvORKHtLaPCUQ"
               title="How it works"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
