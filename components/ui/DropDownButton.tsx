@@ -19,8 +19,8 @@ interface Props {
 export function DropdownMenuBasic({ logout, moveToDashboard }: Props) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Menu</Button>
+      <DropdownMenuTrigger style={{zIndex:"50"}} asChild>
+        <Button style={{cursor:"pointer"}} variant="outline">Menu</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
@@ -32,7 +32,7 @@ export function DropdownMenuBasic({ logout, moveToDashboard }: Props) {
           </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem style={{ cursor: "pointer" }} onClick={logout}>
+        <DropdownMenuItem  style={{ cursor: "pointer" }} onClick={logout}>
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

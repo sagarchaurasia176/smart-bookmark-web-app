@@ -1,14 +1,57 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { Home, User, BookOpen, LogIn, UserPlus, LogOut, Loader2 } from "lucide-react";
+import {
+  Home,
+  User,
+  BookOpen,
+  LogIn,
+  UserPlus,
+  LogOut,
+  Loader2,
+} from "lucide-react";
 import { DropdownMenuBasic } from "@/components/ui/DropDownButton";
-
+import {
+  Navbar as NavbarComponent,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
 const Navbar = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navItems = [
+    {
+      name: "Home",
+      link: "/",
+      icon: Home,
+      target:"_blank"
+    },
+    {
+      name: "Video Demo",
+      link: "https://www.youtube.com/",
+      icon: BookOpen,
+      target:"_blank"
+
+    },
+    {
+      name: "Github",
+      link:"https://github.com/sagarchaurasia176/smart-bookmark-web-app",
+      icon: User,
+      target:"_blank"
+    },
+   
+  ];
 
   useEffect(() => {
     const checkSession = async () => {
@@ -32,6 +75,20 @@ const Navbar = () => {
     checkSession();
   }, []);
 
+  // Scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleGoogleSignIn = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -47,93 +104,127 @@ const Navbar = () => {
     router.push("/");
   };
 
-
   // move to dashboard
-  const moveToDashboard = ()=>{
-    router.push("/dashboard")
-  }
-
-
-  if (loading) {
-    return (
-      <nav className="flex items-center justify-between p-4 bg-white shadow-md">
-        <div className="flex items-center space-x-8">
-          <a
-            href="/"
-            className="flex items-center space-x-2 text-lg font-semibold text-gray-800 hover:text-blue-600"
-          >
-            <Home size={20} />
-            <span>Home</span>
-          </a>
-          <a
-            href="/about"
-            className="flex items-center space-x-2 text-lg text-gray-600 hover:text-blue-600"
-          >
-            <User size={20} />
-            <span>About</span>
-          </a>
-          <a href="/blog" className="flex items-center space-x-2 text-lg text-gray-600 hover:text-blue-600">
-            <BookOpen size={20} />
-            <span>Blog</span>
-          </a>
-        </div>
-        <div className="flex items-center">
-          <Loader2 className="animate-spin" size={20} />
-        </div>
-      </nav>
-    );
-  }
+  const moveToDashboard = () => {
+    router.push("/dashboard");
+  };
 
   return (
-    <div>
-      <nav className="flex items-center justify-between p-4 bg-white shadow-md">
-        <div className="flex items-center space-x-8">
-          <a
-            href="/"
-            className="flex items-center space-x-2 text-lg font-semibold text-gray-800 hover:text-blue-600"
-          >
-            <Home size={20} />
-            <span>Home</span>
-          </a>
-          <a
-            href="/about"
-            className="flex items-center space-x-2 text-lg text-gray-600 hover:text-blue-600"
-          >
-            <User size={20} />
-            <span>About</span>
-          </a>
-          <a href="/blog" className="flex items-center space-x-2 text-lg text-gray-600 hover:text-blue-600">
-            <BookOpen size={20} />
-            <span>Blog</span>
-          </a>
-        </div>
-        <div className="flex items-center space-x-4">
-          {!isLoggedIn ? (
-            <>
-              <button
-                onClick={handleGoogleSignIn}
-                id="login"
-                className="flex items-center space-x-2 px-4 py-2 text-blue-600 border border-blue-600 rounded hover:bg-blue-50"
-              >
-                <LogIn size={18} />
-                <span>Login</span>
-              </button>
-              <button
-                onClick={handleGoogleSignIn}
-                id="sign"
-                className="flex items-center space-x-2 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
-              >
-                <UserPlus size={18} />
-                <span>Sign Up</span>
-              </button>
-            </>
-          ) : (
+    <div className="relative w-full sticky top-0 left-0 z-50 ">
+      <NavbarComponent>
+        {/* Desktop Navigation */}
+        <NavBody>
+          <NavbarLogo />
+          <NavItems items={navItems}/>
+          <div className="hidden p-3 md:flex items-center gap-3">
+            {loading ? (
+              <div className="flex items-center justify-center p-2">
+                <Loader2 size={18} className="animate-spin text-neutral-500" />
+              </div>
+            ) : !isLoggedIn ? (
+              <>
+                <NavbarButton
+                  variant="secondary"
+                  onClick={handleGoogleSignIn}
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-lg transition-colors"
+                >
+                  <LogIn size={16} />
+                  <span className="hidden lg:inline">Login</span>
+                </NavbarButton>
+                <NavbarButton
+                  variant="primary"
+                  onClick={handleGoogleSignIn}
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                >
+                  <UserPlus size={16} />
+                  <span className="hidden lg:inline">Sign Up</span>
+                </NavbarButton>
+              </>
+            ) : (
+              <DropdownMenuBasic
+                logout={handleSignOut}
+                moveToDashboard={moveToDashboard}
+              />
+            )}
+          </div>
+        </NavBody>
 
-              <DropdownMenuBasic logout={handleSignOut}  moveToDashboard={moveToDashboard}/>
-           
-          )}
-        </div>
-      </nav>
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <div className="flex md:hidden items-center gap-2">
+              {!isLoggedIn ? (
+                <NavbarButton
+                  variant="primary"
+                  onClick={handleGoogleSignIn}
+                  className="px-3 py-2 text-sm"
+                >
+                  <LogIn size={16} />
+                </NavbarButton>
+              ) : (
+                <DropdownMenuBasic
+                  logout={handleSignOut}
+                  moveToDashboard={moveToDashboard}
+                />
+              )}
+              <MobileNavToggle
+                isOpen={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              />
+            </div>
+          </MobileNavHeader>
+
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            <div className="flex flex-col space-y-4 p-4">
+              {navItems.map((item, idx) => (
+                <a
+                  key={`mobile-link-${idx}`}
+                  href={item.link}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="relative text-neutral-600 dark:text-neutral-300 flex items-center space-x-3 py-2 px-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                >
+                  <item.icon size={20} />
+                  <span className="text-base font-medium">{item.name}</span>
+                </a>
+              ))}
+
+              {!isLoggedIn && (
+                <div className="flex flex-col gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
+                  <NavbarButton
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      handleGoogleSignIn();
+                    }}
+                    variant="secondary"
+                    className="w-full justify-center py-3 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700"
+                  >
+                    <LogIn
+                      size={18}
+                      className="text-neutral-700 dark:text-neutral-300"
+                    />
+                    Login
+                  </NavbarButton>
+                  <NavbarButton
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      handleGoogleSignIn();
+                    }}
+                    variant="primary"
+                    className="w-full justify-center py-3 bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    <UserPlus size={18} className="text-white" />
+                    Sign Up
+                  </NavbarButton>
+                </div>
+              )}
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </NavbarComponent>
     </div>
   );
 };

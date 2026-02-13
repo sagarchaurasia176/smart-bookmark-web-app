@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+<<<<<<< Updated upstream
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -36,6 +37,10 @@ export async function getAuthenticatedUser() {
 
   return user;
 }
+=======
+import { NextResponse } from "next/server";
+import { getAuthenticatedUser } from "../authenticatedUsers/route";
+>>>>>>> Stashed changes
 
 // post req - for creating the bookmark and update into the db
 export async function POST(request: Request) {
@@ -126,15 +131,4 @@ export async function GET() {
       { status: 500 },
     );
   }
-}
-
-{
-  /* Description  ai work pending*/
-}
-{
-  /* {bookmark.description && (
-                  <p className="text-sm text-slate-600 mb-4 line-clamp-2">
-                    {bookmark.description}
-                  </p>
-                )} */
 }
