@@ -38,13 +38,13 @@ const DashboardSidebar = () => {
 
   return (
     <div className="flex bg-slate-900 h-screen">
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+      <div className="w-full bg-white border-r border-gray-200 flex flex-col">
         {/* Header */}
-        <div className="p-4 text-center border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">
+        <div className="p-3 sm:p-4 text-center border-b border-gray-200">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
             Hello, {user?.name || "User"}
           </h2>
-          <p className="text-sm text-gray-500 mt-1">{user?.email}</p>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1 truncate">{user?.email}</p>
         </div>
 
         {/* Navigation */}

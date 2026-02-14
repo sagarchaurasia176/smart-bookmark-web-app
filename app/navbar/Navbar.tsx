@@ -39,7 +39,7 @@ const Navbar = () => {
     },
     {
       name: "Video Demo",
-      link: "https://www.youtube.com/",
+      link: "https://youtu.be/8Q1S3jmiIl8?si=tx3ZjW3cZZMK0xYy",
       icon: BookOpen,
       target:"_blank"
 

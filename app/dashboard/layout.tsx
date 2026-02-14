@@ -64,19 +64,19 @@ export default function DashboardLayout({
 
   return (
     <RefreshContext.Provider value={triggerRefresh}>
-      <div className="flex h-screen">
-        {/* Sidebar - Fixed width */}
-        <aside className="w-60 border-r bg-background flex-shrink-0">
+      <div className="flex h-screen overflow-hidden">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <aside className="hidden md:block w-60 border-r bg-background flex-shrink-0">
           <DashboardSidebar />
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 flex flex-col  overflow-hidden">
+        <main className="flex-1 flex flex-col overflow-hidden w-full">
           {/* Horizontal Bar - Fixed height */}
           <HorizontalBar />
 
           {/* Content Area - Scrollable */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6">
             <div key={refreshTrigger}>{children}</div>
           </div>
         </main>
