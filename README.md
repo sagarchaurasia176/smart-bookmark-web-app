@@ -58,7 +58,11 @@ It uses **Supabase (PostgreSQL)** for database hosting, **Google Authentication 
 ---
 
 ## 🎥 Chrome Extension Demo
-
+<p align="center">
+  <a href="https://chromewebstore.google.com/detail/smart-bookmark/fnkikbeildmlbfjchcnmmlgmhgpamdne?hl=en-US" target="_blank">
+    Live Extension Url
+  </a>
+</p>
 <p align="center">
   <a href="https://res.cloudinary.com/dc3mdr2ol/video/upload/v1771082465/Untitled_video_-_Made_with_Clipchamp_1_rrjzqy.mp4">
     <img src="https://img.shields.io/badge/▶️%20Watch%20Chrome%20Extension%20Demo-Click%20Here-success?style=for-the-badge" />
