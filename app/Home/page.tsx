@@ -60,12 +60,16 @@ export default function HeroSection() {
           }}
           className="relative z-10 mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-4 px-4"
         >
-          <button className="w-full sm:w-60 cursor-pointer transform rounded-lg bg-gradient-to-r from-blue-500 to-green-500 px-4 sm:px-6 py-2.5 sm:py-2 font-medium text-sm sm:text-base text-white transition-all duration-300 hover:-translate-y-0.5 hover:from-blue-600 hover:to-green-600 flex items-center justify-center gap-2">
-            <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="currentColor">
+<a 
+            href="https://chromewebstore.google.com/detail/smart-bookmark/fnkikbeildmlbfjchcnmmlgmhgpamdne?hl=en-US" 
+            target="_blank"
+            className="w-full sm:w-60 cursor-pointer transform rounded-lg bg-gradient-to-r from-blue-500 to-green-500 px-4 sm:px-6 py-2.5 sm:py-2 font-medium text-sm sm:text-base text-white transition-all duration-300 hover:-translate-y-0.5 hover:from-blue-600 hover:to-green-600 flex items-center justify-center gap-2"
+          >
+           <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16l-6.222 6.222a.749.749 0 01-1.06 0L7.432 11.54a.75.75 0 111.061-1.061l2.323 2.323L16.507 7.1a.75.75 0 111.061 1.06z" />
             </svg>
             Download Smart Bookmarks
-          </button>
+           </a>
         </motion.div>
         <motion.div
           initial={{
